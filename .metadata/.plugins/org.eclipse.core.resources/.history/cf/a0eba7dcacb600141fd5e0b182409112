@@ -1,0 +1,78 @@
+package nikoniko;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+public class core {
+    public static void main(String[] args) {
+
+        // ブラウザ(Firefox)を起動
+        WebDriver driver = new FirefoxDriver();
+
+        // URLを開く
+        driver.get("http://www.upload.nicovideo.jp/upload");
+
+        // アカウントを取得
+        WebElement mail = driver.findElement(By.id("mail"));
+        WebElement password = driver.findElement(By.id("password"));
+        readAccount();
+        mail.sendKeys("hotmanww@gmail.com");
+        password.sendKeys("hmw78nikoniko");
+        // submit
+        password.submit();
+        WebElement upload = driver.findElement(By.id("upload"));
+        upload.sendKeys("C:\\Users\\hotman\\Desktop\\a.mp4");
+        sleep(1000);
+        //alertOk(driver);
+        WebElement send = driver.findElement(By.name("submitbtn"));
+        send.submit();
+        alertOk(driver);
+        // ブラウザを閉じる
+        //driver.quit();
+    }
+    private static void sleep(int microtime) {
+        try {
+            Thread.sleep(microtime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void alertOk(WebDriver driver){
+    	Wait<WebDriver> wait = new WebDriverWait(driver,10);
+    	Alert alert = wait.until(alertIsPresent());
+
+    	//アラートダイアログ操作
+    	alert = driver.switchTo().alert();
+    	alert.accept();//ダイアログ「OK」ボタン押下
+    }
+    public static void readAccount(){
+    try{
+    	File file = new File("c:\\tmp\\test.txt");
+    	BufferedReader br = new BufferedReader(new FileReader(file));
+
+    	String str = br.readLine();
+    	while(str != null){
+    	    System.out.println(str);
+
+    	    str = br.readLine();
+    	}
+
+    	  br.close();
+    	}catch(FileNotFoundException e){
+    	  System.out.println(e);
+    	}catch(IOException e){
+    	  System.out.println(e);
+    	}
+    }
+}
