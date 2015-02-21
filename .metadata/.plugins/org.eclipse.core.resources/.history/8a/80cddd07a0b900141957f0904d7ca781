@@ -39,12 +39,12 @@ public class setting extends JFrame implements ActionListener{
 		    send.setActionCommand("send");
 		    //初回のみコミュニティ登録
 		    
-		    //JCheckBox checkbox = new JCheckBox("hotmanのコミュニティに登録する", true);
-		    //checkbox.setSelected(true);
+		    JCheckBox checkbox = new JCheckBox("hotmanのコミュニティに登録する", true);
+		    checkbox.setSelected(true);
 		    //パネルに登録
 		    JPanel buttonPanel = new JPanel();
 		    JPanel buttonPanelUp = new JPanel();
-		    //buttonPanelUp.add(checkbox);
+		    buttonPanelUp.add(checkbox);
 		    buttonPanel.add(select);
 		    buttonPanel.add(send);
 		    label = new JLabel();
@@ -56,9 +56,7 @@ public class setting extends JFrame implements ActionListener{
 		    getContentPane().add(buttonPanel, BorderLayout.PAGE_END);
 		    getContentPane().add(buttonPanelUp, BorderLayout.PAGE_START);
 		    label.setText(getVer());
-		    if (getVer().equals("error"))label.setText("最新バージョン取得に失敗しました");
-		    else if(getVer().equals(ver))label.setText("最新バージョンです");
-		    else label.setText("最新バージョンではありません更新して下さい");
+		    if(getVer().equals(ver))label.setText("最新バージョンです");
 	select.addActionListener( new ActionListener(){
         public void actionPerformed(ActionEvent event){
         	selectAction();
@@ -69,13 +67,15 @@ public class setting extends JFrame implements ActionListener{
         	sendAction();
         }
 	});
-/*	checkbox.addActionListener( new ActionListener(){
+	checkbox.addActionListener( new ActionListener(){
         public void actionPerformed(ActionEvent event){
         	checkboxAction(checkbox);
         }
-	});*/
+	});
 }
-	public void checkboxAction(JCheckBox checkbox){}
+	public void checkboxAction(JCheckBox checkbox){
+		
+	}
 	public void selectAction(){
 		String last_time_path=pathRead();	
 		JFileChooser filechooser = new JFileChooser(last_time_path);
@@ -113,11 +113,7 @@ public class setting extends JFrame implements ActionListener{
 	public static boolean pathWhite(String path){
 		File file = new File("movie_path.txt");
 		FileWriter filewriter;
-		String old;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			old=br.readLine();
-			br.close();
 			filewriter = new FileWriter(file);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -125,7 +121,7 @@ public class setting extends JFrame implements ActionListener{
 		}
 		BufferedWriter bw = new BufferedWriter(filewriter);
 		PrintWriter pw = new PrintWriter(bw);
-		if(path.equals("null")){pw.print(old);pw.close();return false;}
+		if(path.equals("null")){pw.close();return false;}
 		else pw.print(path);
 		pw.close();
 		return true;
@@ -154,10 +150,12 @@ public class setting extends JFrame implements ActionListener{
                 BufferedReader bf = new BufferedReader(new InputStreamReader( (InputStream)content) );        
                 String line;
                 while ((line = bf.readLine()) != null) {
+                    System.out.println(line);
                     return line;
                 }
             }
             else {
+                System.out.println(content.toString());
                 return content.toString();
             }
         }

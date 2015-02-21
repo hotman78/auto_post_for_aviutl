@@ -69,13 +69,15 @@ public class setting extends JFrame implements ActionListener{
         	sendAction();
         }
 	});
-/*	checkbox.addActionListener( new ActionListener(){
+	checkbox.addActionListener( new ActionListener(){
         public void actionPerformed(ActionEvent event){
         	checkboxAction(checkbox);
         }
-	});*/
+	});
 }
-	public void checkboxAction(JCheckBox checkbox){}
+	public void checkboxAction(JCheckBox checkbox){
+		
+	}
 	public void selectAction(){
 		String last_time_path=pathRead();	
 		JFileChooser filechooser = new JFileChooser(last_time_path);
